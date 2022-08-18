@@ -8,5 +8,7 @@ data class Post (
     val content: String,
     val published: String,
     val likes: Int = 0,
-    var likedByMe: Boolean = false
+    var likedByMe: Boolean = false,
+    var countReposts: Int = 0,
+    var countLikes: Int = 1
 )
