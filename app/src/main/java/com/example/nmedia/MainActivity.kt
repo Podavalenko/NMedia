@@ -3,7 +3,9 @@ package com.example.nmedia
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import com.example.nmedia.databinding.ActivityMainBinding
+import com.example.nmedia.viewmodel.PostViewModel
 import java.text.DecimalFormat
 
 
@@ -16,47 +18,24 @@ class MainActivity : AppCompatActivity() {
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val post = Post(
-            id = 1,
-            author = "Нетология. Университет интернет-профессий будущего",
-            content = "Привет, это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов. Но самое важное остаётся с нами: мы верим, что в каждом уже есть сила, которая заставляет хотеть больше, целиться выше, бежать быстрее. Наша миссия — помочь встать на путь роста и начать цепочку перемен → http://netology.ru",
-            published = "21 мая в 18:36",
-            likedByMe = false,
-            countReposts = 999,
-            countLikes = 1,
-        )
+        val viewModel by viewModels<PostViewModel>()
+        viewModel.data.observe(this) { post ->
 
-        with (binding) {
-            author.text = post.author
-            published.text = post.published
-            content.text = post.content
-            if (post.likedByMe) {
-                like?.setImageResource(R.drawable.ic_liked)
+            with(binding) {
+                author.text = post.author
+                published.text = post.published
+                content.text = post.content
+                val likeImage = if (post.likedByMe) {
+                    R.drawable.ic_liked
+                } else {
+                    R.drawable.ic_like
+                }
+                like?.setImageResource(likeImage)
+                countLike?.text = post.likes.toString()
             }
-            like?.setOnClickListener {
-                post.likedByMe = !post.likedByMe
-                like.setImageResource(
-                    if (post.likedByMe) R.drawable.ic_liked else R.drawable.ic_like
-                )
-                countLike.setText(
-                    if (post.likedByMe) displayNumbers(post.countLikes--) else displayNumbers(post.countLikes++)
-                )
-               // Log.d("Tag", "done_Like")
-            }
-            repost?.setOnClickListener {
-                countRepost.setText(displayNumbers(post.countReposts++))
-               // Log.d("Tag", "done_Repost")
-            }
-           // root?.setOnClickListener {
-            //    Log.d("Tag", "done_root")
-           // }
-          // iconNetology?.setOnClickListener {
-            //   Log.d("Tag", "Avatar")
-           // }
-
-          //  imageView2.setOnClickListener {
-           //     Log.d("Tag", "...")
-            //}
+        }
+            binding.like?.setOnClickListener {
+                viewModel.like()
         }
    }
 
