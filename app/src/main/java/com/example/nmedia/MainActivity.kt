@@ -32,10 +32,14 @@ class MainActivity : AppCompatActivity() {
                 }
                 like?.setImageResource(likeImage)
                 countLike?.text = post.likes.toString()
+                countRepost?.text = post.reposts.toString ()
             }
         }
             binding.like?.setOnClickListener {
                 viewModel.like()
+            }
+                binding.repost.setOnClickListener {
+                    viewModel.repost()
         }
    }
 
