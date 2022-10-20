@@ -7,4 +7,10 @@
     <string name="sharenumber" translatable="false">0</string>
     <string name="watchnumber" translatable="false">0</string>
     <string name="likesnumber" translatable="false">0</string>
+    <string name="description_post_save">Save</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_remove">Remove</string>
+    <string name="post_text">Post Text</string>
+    <string name="error_empty_content">Content can\'t be empty</string>
+    <string name="text_edit" translatable="false">Edit message</string>
 </resources>

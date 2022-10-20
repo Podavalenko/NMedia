@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.nmedia.Post
 
 class InMemoryPostRepository: PostRepository {
+    private var nextId = 1L
     private var posts = listOf(
 
         Post(
@@ -25,7 +26,7 @@ class InMemoryPostRepository: PostRepository {
             likes = 0,
             reposts = 0
         )
-    )
+        ).reversed()
     private val data = MutableLiveData(posts)
 
     override fun getAll(): LiveData<List<Post>> = data
@@ -43,6 +44,32 @@ class InMemoryPostRepository: PostRepository {
     override fun repostById(id: Long) {
         posts = posts.map {
             if (it.id != id) it else it.copy(reposts = it.reposts + 1)
+        }
+        data.value = posts
+    }
+
+    override fun removeById(id: Long) {
+        posts = posts.filter {it.id != id}
+        data.value = posts
+    }
+
+    override fun save(post: Post) {
+        if (post.id == 0L) {
+            posts = listOf(
+                post.copy(
+                    id = nextId++,
+                    author = "Me",
+                    published = "now",
+                    likedByMe = false,
+                    likes = 0,
+                    reposts = 0
+                )
+            ) + posts
+            data.value = posts
+            return
+        }
+        posts = posts.map {
+            if (it.id != post.id) it else it.copy(content = post.content)
         }
         data.value = posts
     }
