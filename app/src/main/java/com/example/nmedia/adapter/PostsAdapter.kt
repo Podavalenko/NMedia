@@ -72,6 +72,7 @@ interface OnInterfactionListener {
                 countRepost.text = displayNumbers(post.reposts)
             }
         }
+
         private fun displayNumbers(number: Long): String {
             val decimalFormat = DecimalFormat("#.#")
             return when (number) {

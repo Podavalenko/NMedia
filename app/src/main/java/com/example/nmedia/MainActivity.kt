@@ -45,11 +45,11 @@ class MainActivity : AppCompatActivity() {
         })
 
         binding.list.adapter = adapter
-        viewModel.data.observe(this, { posts ->
+        viewModel.data.observe(this) { posts ->
             adapter.submitList(posts)
-        })
+        }
 
-        viewModel.edited.observe(this, { post ->
+        viewModel.edited.observe(this) { post ->
             if (post.id == 0L) {
                 return@observe
             }
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                 requestFocus()
                 setText(post.content)
             }
-        })
+        }
 
         binding.save.setOnClickListener {
             with(binding.content) {
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.content.setOnClickListener{
+        binding.content.setOnClickListener {
             binding.group.visibility = View.VISIBLE
         }
 
