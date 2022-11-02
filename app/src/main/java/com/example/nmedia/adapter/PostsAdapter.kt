@@ -41,9 +41,9 @@ interface OnInterfactionListener {
                 author.text = post.author
                 published.text = post.published
                 content.text = post.content
-                like.setImageResource(
-                    if (post.likedByMe) R.drawable.ic_liked else R.drawable.ic_like
-                )
+                like.isChecked = post.likedByMe
+                like.text = "${post.likes}"
+
                 menu.setOnClickListener {
                     PopupMenu(it.context, it).apply {
                         inflate(R.menu.options_post)
@@ -68,8 +68,8 @@ interface OnInterfactionListener {
                 repost.setOnClickListener {
                     onInterfactionListener.onRepost(post)
                 }
-                countLike.text = displayNumbers(post.likes)
-                countRepost.text = displayNumbers(post.reposts)
+                like.text = displayNumbers(post.likes)
+                repost.text = displayNumbers(post.reposts)
             }
         }
 
