@@ -42,16 +42,17 @@ app:layout_constraintStart_toEndOf="@id/iconNetology"
 app:layout_constraintTop_toBottomOf="@id/author"
 tools:text="@sample/posts.json/data/published" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/common_spacing"
-        android:background="@android:color/transparent"
         android:contentDescription="@string/description_post_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_more_vert_24" />
+        app:icon="@drawable/ic_baseline_more_vert_24"
+        style="@style/Widget.AppTheme.Viewing">
+
+    </com.google.android.material.button.MaterialButton>
 
 
 
@@ -61,6 +62,13 @@ tools:text="@sample/posts.json/data/published" />
         app:barrierDirection="bottom"
         tools:layout_editor_absoluteX="86dp"
         tools:layout_editor_absoluteY="69dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="content" />
 
     <TextView
         android:id="@+id/content"
@@ -93,59 +101,46 @@ tools:text="@sample/posts.json/data/published" />
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/content" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checkable="true"
+        android:contentDescription="@string/description_likes"
+        android:layout_marginTop="@dimen/common_spacing"
+        app:icon="@drawable/ic_like_24"
         android:layout_marginStart="32dp"
         app:layout_constraintHorizontal_bias="0.041"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dividerBottom"
-        app:srcCompat="@drawable/ic_like" />
+        tools:cheked="@sample/posts.json/data/likedByMe"
+        tools:text="@sample/posts.json/data/likes"
+        style="@style/Widget.AppTheme.LikeButton"/>
 
-    <TextView
-        android:id="@+id/countLike"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="5"
-        app:layout_constraintBottom_toBottomOf="@+id/like"
-        app:layout_constraintStart_toEndOf="@+id/like"/>
-    //tools:text="10" />
 
-    <ImageView
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/repost"
+        style="@style/Widget.AppTheme.RepostButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/countLike"
-        app:layout_constraintStart_toEndOf="@+id/countLike"
-        app:srcCompat="@drawable/ic_baseline_share_24" />
+        android:checkable="true"
+        android:contentDescription="@string/description_repost"
+        app:icon="@drawable/ic_baseline_share_24"
+        app:layout_constraintStart_toEndOf="@+id/like"
+        app:layout_constraintTop_toTopOf="@+id/like"
+        tools:text="@sample/posts.json/data/repost" />
 
-    <TextView
-        android:id="@+id/countRepost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="10"
-        app:layout_constraintBottom_toBottomOf="@+id/repost"
-        app:layout_constraintStart_toEndOf="@+id/repost"/>
-    //tools:text="10" />
 
-    <ImageView
-        android:id="@+id/eyeIcon"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/viewing"
+        style="@style/Widget.AppTheme.Viewing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/repost"
-        app:layout_constraintEnd_toStartOf="@+id/eyeCount"
-        app:srcCompat="@drawable/ic_baseline_remove_red_eye_24" />
-
-    <TextView
-        android:id="@+id/eyeCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="5"
-        app:layout_constraintBottom_toBottomOf="@+id/eyeIcon"
+        android:contentDescription="@string/description_viewing"
+        app:icon="@drawable/ic_baseline_remove_red_eye_24"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:text="5" />
+        app:layout_constraintTop_toTopOf="@+id/repost"
+        tools:text="@sample/posts.json/data/viewing" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
