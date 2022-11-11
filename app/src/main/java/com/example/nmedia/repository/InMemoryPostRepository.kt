@@ -15,7 +15,8 @@ class InMemoryPostRepository: PostRepository {
             published = "18 сентября в 10:12",
             likedByMe = false,
             likes = 0,
-            reposts = 0
+            reposts = 0,
+            videoUrl = null
         ),
         Post(
             id = 1,
@@ -24,7 +25,8 @@ class InMemoryPostRepository: PostRepository {
             published = "21 мая в 18:36",
             likedByMe = false,
             likes = 0,
-            reposts = 0
+            reposts = 0,
+            videoUrl = null
         )
         ).reversed()
     private val data = MutableLiveData(posts)
@@ -71,6 +73,9 @@ class InMemoryPostRepository: PostRepository {
         posts = posts.map {
             if (it.id != post.id) it else it.copy(content = post.content)
         }
+        data.value = posts
+    }
+    override fun video() {
         data.value = posts
     }
 }

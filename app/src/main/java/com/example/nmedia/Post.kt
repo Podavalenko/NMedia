@@ -1,7 +1,9 @@
 package com.example.nmedia
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-
+@Parcelize
 data class Post (
     val id: Long,
     val author: String,
@@ -10,6 +12,6 @@ data class Post (
     val likedByMe: Boolean = false,
     val likes: Long = 0,
     val reposts: Long = 0,
-    //var countReposts: Int = 0,
-   // var countLikes: Int = 1
-)
+    val videoUrl: String?
+
+    ): Parcelable

@@ -11,12 +11,14 @@ import com.example.nmedia.databinding.PostCardBinding
 import com.example.nmedia.Post
 import com.example.nmedia.repository.InMemoryPostRepository
 import java.text.DecimalFormat
+import android.view.View
 
 interface OnInterfactionListener {
     fun onLike(post: Post) {}
     fun onEdit(post: Post) {}
     fun onRemove(post: Post) {}
     fun onRepost(post: Post) {}
+    fun onVideo(post: Post) {}
 
     class PostsAdapter(
         private val onInterfactionListener: OnInterfactionListener,
@@ -43,6 +45,9 @@ interface OnInterfactionListener {
                 content.text = post.content
                 like.isChecked = post.likedByMe
                 like.text = "${post.likes}"
+                if (!post.videoUrl.isNullOrEmpty()) {
+                    video.visibility = View.VISIBLE
+                }   else video.visibility = View.GONE
 
                 menu.setOnClickListener {
                     PopupMenu(it.context, it).apply {
@@ -67,6 +72,9 @@ interface OnInterfactionListener {
                 }
                 repost.setOnClickListener {
                     onInterfactionListener.onRepost(post)
+                }
+                video.setOnClickListener {
+                    onInterfactionListener.onVideo(post)
                 }
                 like.text = displayNumbers(post.likes)
                 repost.text = displayNumbers(post.reposts)
