@@ -3,8 +3,16 @@ package com.example.nmedia.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.nmedia.Post
+import android.content.Context
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
-class InMemoryPostRepository: PostRepository {
+class InMemoryPostRepository(
+    private val context: Context,
+) : PostRepository {
+    private val gson = Gson()
+    private val type = TypeToken.getParameterized(List::class.java, Post::class.java).type
+    private val filename = "posts.json"
     private var nextId = 1L
     private var posts = listOf(
 
@@ -29,7 +37,24 @@ class InMemoryPostRepository: PostRepository {
             videoUrl = null
         )
         ).reversed()
+        set(value) {
+            field = value
+            sync()
+        }
     private val data = MutableLiveData(posts)
+
+    init {
+        val file = context.filesDir.resolve(filename)
+        if (file.exists()) {
+            context.openFileInput(filename).bufferedReader().use {
+                posts = gson.fromJson(it, type)
+                nextId = posts.maxOf { post -> post.id } + 1
+                data.value = posts
+            }
+        } else {
+            sync()
+        }
+    }
 
     override fun getAll(): LiveData<List<Post>> = data
 
@@ -77,5 +102,10 @@ class InMemoryPostRepository: PostRepository {
     }
     override fun video() {
         data.value = posts
+    }
+    private fun sync() {
+        context.openFileOutput(filename, Context.MODE_PRIVATE).bufferedWriter().use {
+            it.write(gson.toJson(posts))
+        }
     }
 }

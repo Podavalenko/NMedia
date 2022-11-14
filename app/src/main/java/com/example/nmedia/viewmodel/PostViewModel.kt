@@ -5,6 +5,8 @@ import com.example.nmedia.repository.InMemoryPostRepository
 import com.example.nmedia.repository.PostRepository
 import androidx.lifecycle.MutableLiveData
 import com.example.nmedia.Post
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 
 private val empty = Post(
     id = 0,
@@ -17,8 +19,8 @@ private val empty = Post(
     videoUrl = ""
 )
 
-class PostViewModel : ViewModel() {
-    private val repository: PostRepository = InMemoryPostRepository()
+class PostViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository: PostRepository = InMemoryPostRepository(application)
     val data = repository.getAll()
     val edited = MutableLiveData(empty)
     fun likeById(id: Long) = repository.likeById(id)
