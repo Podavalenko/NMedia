@@ -12,6 +12,8 @@ import com.example.nmedia.Post
 import com.example.nmedia.repository.InMemoryPostRepository
 import java.text.DecimalFormat
 import android.view.View
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 
 interface OnInterfactionListener {
     fun onLike(post: Post) {}
@@ -19,6 +21,7 @@ interface OnInterfactionListener {
     fun onRemove(post: Post) {}
     fun onRepost(post: Post) {}
     fun onVideo(post: Post) {}
+    fun onOpenPost(post: Post) {}
 
     class PostsAdapter(
         private val onInterfactionListener: OnInterfactionListener,
@@ -75,6 +78,9 @@ interface OnInterfactionListener {
                 }
                 video.setOnClickListener {
                     onInterfactionListener.onVideo(post)
+                }
+                content.setOnClickListener {
+                    onInterfactionListener.onOpenPost(post)
                 }
                 like.text = displayNumbers(post.likes)
                 repost.text = displayNumbers(post.reposts)

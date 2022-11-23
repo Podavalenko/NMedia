@@ -16,10 +16,16 @@
         <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/drawable/ic_ok_24.xml" value="0.2725" />
         <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/drawable/ic_play_48.xml" value="0.2725" />
         <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/drawable/ic_save_48.xml" value="0.2925" />
+        <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/layout/activity_app.xml" value="0.2975630611372381" />
+        <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/layout/activity_card_post_fragment.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/layout/activity_edit_post.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/layout/activity_intent_handler.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/layout/activity_main.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/layout/activity_new_post.xml" value="0.2975630611372381" />
+        <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/layout/fragment_card_post.xml" value="0.2975630611372381" />
+        <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/layout/fragment_edit_post.xml" value="0.2975630611372381" />
+        <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/layout/fragment_feed.xml" value="0.2975630611372381" />
+        <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/layout/fragment_new_post.xml" value="0.2975630611372381" />
         <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/layout/post_card.xml" value="0.5" />
         <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/layout/recycler_view_item.xml" value="0.3625" />
         <entry key="..\:/Users/l8-15/AndroidStudioProjects/NMedia/app/src/main/res/menu/options_post.xml" value="0.2967079948696024" />
