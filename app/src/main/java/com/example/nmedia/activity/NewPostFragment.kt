@@ -2,6 +2,7 @@ package com.example.nmedia.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,8 @@ import com.example.nmedia.databinding.FragmentNewPostBinding
 import com.example.nmedia.util.AndroidUtils
 import com.example.nmedia.util.StringArg
 import com.example.nmedia.viewmodel.PostViewModel
+import java.io.File
+import androidx.activity.addCallback
 
 class NewPostFragment : Fragment() {
     companion object {
@@ -36,9 +39,22 @@ class NewPostFragment : Fragment() {
         binding.ok.setOnClickListener {
             viewModel.changeContent(binding.edit.text.toString())
             viewModel.save()
+            savecontent("")
             AndroidUtils.hideKeyboard(requireView())
             findNavController().navigateUp()
         }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            val content = binding.edit.text.toString()
+            savecontent(content)
+            findNavController().navigateUp()
+        }
         return binding.root
+    }
+    fun savecontent(string: String) {
+        context?.openFileOutput("savecontent.json", Context.MODE_PRIVATE)?.bufferedWriter().use {
+            if (it != null) {
+                it.write(string)
+            }
+        }
     }
 }

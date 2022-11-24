@@ -17,6 +17,7 @@ import com.example.nmedia.adapter.OnInterfactionListener
 import com.example.nmedia.databinding.FragmentFeedBinding
 import com.example.nmedia.Post
 import com.example.nmedia.viewmodel.PostViewModel
+import java.io.File
 
 class FragmentFeed : Fragment() {
     private val viewModel: PostViewModel by viewModels(
@@ -82,7 +83,12 @@ class FragmentFeed : Fragment() {
         })
 
         binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_fragmentFeed_to_newPostFragment)
+            findNavController().navigate(R.id.action_fragmentFeed_to_newPostFragment,
+                Bundle().apply
+                {
+                    val file = File(context?.filesDir, "savecontent.json")
+                    if (file.exists()) textArg = file.readText()
+                })
         }
 
         return binding.root
