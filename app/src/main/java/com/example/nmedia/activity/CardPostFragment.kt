@@ -15,7 +15,7 @@ import com.example.nmedia.Post
 import com.example.nmedia.util.PostArg
 import com.example.nmedia.util.StringArg
 import com.example.nmedia.viewmodel.PostViewModel
-
+import com.example.nmedia.adapter.OnInterfactionListener
 
 class CardPostFragment : Fragment() {
     companion object {

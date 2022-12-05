@@ -30,7 +30,7 @@ class NewPostFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentNewPostBinding.inflate(inflater, container, false)
         binding.edit.requestFocus()
 
@@ -41,6 +41,10 @@ class NewPostFragment : Fragment() {
             viewModel.save()
             savecontent("")
             AndroidUtils.hideKeyboard(requireView())
+        }
+        viewModel.postCreated.observe(viewLifecycleOwner) {
+            viewModel.loadPosts()
+
             findNavController().navigateUp()
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {

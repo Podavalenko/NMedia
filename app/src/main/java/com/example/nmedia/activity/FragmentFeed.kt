@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,7 +14,6 @@ import com.example.nmedia.R
 import com.example.nmedia.activity.CardPostFragment.Companion.postArg
 import com.example.nmedia.activity.NewPostFragment.Companion.textArg
 import com.example.nmedia.adapter.OnInterfactionListener
-//import com.example.nmedia.adapter.PostsAdapter
 import com.example.nmedia.databinding.FragmentFeedBinding
 import com.example.nmedia.Post
 import com.example.nmedia.viewmodel.PostViewModel
@@ -28,7 +28,7 @@ class FragmentFeed : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentFeedBinding.inflate(inflater, container, false)
 
         val adapter = OnInterfactionListener.PostsAdapter(object : OnInterfactionListener {
@@ -78,9 +78,16 @@ class FragmentFeed : Fragment() {
         })
 
         binding.list.adapter = adapter
-        viewModel.data.observe(viewLifecycleOwner, { posts ->
-            adapter.submitList(posts)
+        viewModel.data.observe(viewLifecycleOwner, { state ->
+            adapter.submitList(state.posts)
+            binding.progress.isVisible = state.loading
+            binding.errorGroupe.isVisible = state.error
+            binding.emptyText.isVisible = state.empty
         })
+
+        binding.retryButton.setOnClickListener {
+            viewModel.loadPosts()
+        }
 
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_fragmentFeed_to_newPostFragment,
