@@ -14,6 +14,10 @@ import java.text.DecimalFormat
 import android.view.View
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+
+
 
 interface OnInterfactionListener {
     fun onLike(post: Post) {}
@@ -45,6 +49,16 @@ interface OnInterfactionListener {
             binding.apply {
                 author.text = post.author
                 published.text = post.published
+                val urlAvatar = "http://10.0.2.2:9999/avatars/${post.authorAvatar}"
+
+                Glide.with(avatar)
+                    .load(urlAvatar)
+                    .timeout(10_000)
+                    .circleCrop()
+                    .placeholder(R.drawable.ic_baseline_loading_24)
+                    .error(R.drawable.ic_baseline_error_24)
+                    .into(avatar)
+
                 content.text = post.content
                 like.isChecked = post.likedByMe
                 like.text = "${post.likes}"

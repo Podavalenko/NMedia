@@ -140,7 +140,7 @@ class PostRepositoryImpl : PostRepository {
         client.newCall(request)
             .enqueue(object : Callback {
                 override fun onResponse(call: Call, response: Response) {
-                    val body = response.body?.string() ?: throw RuntimeException("body is null")
+                    //val body = response.body?.string() ?: throw RuntimeException("body is null")
                     try {
                         callback.onSuccess()
                     } catch (e: Exception) {

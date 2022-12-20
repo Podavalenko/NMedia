@@ -15,12 +15,14 @@ import com.example.nmedia.Post
 import com.example.nmedia.util.PostArg
 import com.example.nmedia.util.StringArg
 import com.example.nmedia.viewmodel.PostViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.nmedia.adapter.OnInterfactionListener
 
 class CardPostFragment : Fragment() {
     companion object {
         var Bundle.postArg: Post? by PostArg
-        var Bundle.textArg: String? by StringArg
+        //var Bundle.textArg: String? by StringArg
     }
 
     private val viewModel: PostViewModel by viewModels(
@@ -34,9 +36,20 @@ class CardPostFragment : Fragment() {
     ): View? {
         val binding = FragmentCardPostBinding.inflate(inflater, container, false)
 
+        //val postId = requireArguments().postId ?: error("Post id is required")
+
         arguments?.postArg?.let {
             binding.apply {
                 author.text = it.author
+                val url = "http://10.0.2.2:9999/avatars/${it.authorAvatar}"
+
+                Glide.with(avatar)
+                    .load(url)
+                    .timeout(10_000)
+                    .circleCrop()
+                    .placeholder(R.drawable.ic_baseline_loading_24)
+                    .error(R.drawable.ic_baseline_error_24)
+                    .into(avatar)
                 published.text = it.published
                 content.text = it.content
                 like.isChecked = it.likedByMe
