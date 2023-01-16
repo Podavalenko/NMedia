@@ -15,6 +15,9 @@ import com.example.nmedia.util.AndroidUtils
 import com.example.nmedia.util.StringArg
 import com.example.nmedia.viewmodel.PostViewModel
 import java.io.File
+import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
+import com.example.nmedia.R
 import androidx.activity.addCallback
 
 class NewPostFragment : Fragment() {
@@ -47,6 +50,10 @@ class NewPostFragment : Fragment() {
 
             findNavController().navigateUp()
         }
+        viewModel.networkError.observe(viewLifecycleOwner, {
+            Snackbar.make(requireView(), "${resources.getString(R.string.network_error)} $it", Snackbar.LENGTH_LONG).show()
+        })
+
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             val content = binding.edit.text.toString()
             savecontent(content)

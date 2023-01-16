@@ -18,6 +18,7 @@ import com.example.nmedia.databinding.FragmentFeedBinding
 import com.example.nmedia.Post
 import com.example.nmedia.viewmodel.PostViewModel
 import java.io.File
+import com.google.android.material.snackbar.Snackbar
 
 class FragmentFeed : Fragment() {
     private val viewModel: PostViewModel by viewModels(
@@ -83,6 +84,10 @@ class FragmentFeed : Fragment() {
             binding.progress.isVisible = state.loading
             binding.errorGroupe.isVisible = state.error
             binding.emptyText.isVisible = state.empty
+        })
+
+        viewModel.networkError.observe(viewLifecycleOwner, {
+            Snackbar.make(requireView(), "${resources.getString(R.string.network_error)} $it", Snackbar.LENGTH_LONG).show()
         })
 
         binding.retryButton.setOnClickListener {

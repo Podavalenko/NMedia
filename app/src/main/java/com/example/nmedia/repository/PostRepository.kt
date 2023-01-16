@@ -4,33 +4,18 @@ import androidx.lifecycle.LiveData
 import com.example.nmedia.Post
 
 interface PostRepository {
-    fun getAll(): List<Post>
-    fun likeById(id: Long)
-    fun dislikeById(id: Long)
     fun repostById(id: Long)
-    fun removeById(id:Long)
-    fun save(post: Post)
     fun video()
-    fun getPostById(id: Long): Post
-    fun getAllAsync(callback: GetAllCallback)
 
-    fun likeByIdAsync(id: Long, callback: SaveCallBack)
-    fun dislikeByIdAsync(id: Long, callback: SaveCallBack)
-    fun removeByIdAsync(id: Long, callback: ByIdCallBack)
-    fun saveAsync(post: Post, callback: SaveCallBack)
+    fun getAll(callback: Callback<List<Post>>)
+    fun getPostById(id: Long, callback: Callback<Post>)
+    fun likeById(id: Long, callback: Callback<Post>)
+    fun dislikeById(id: Long, callback: Callback<Post>)
+    fun removeById(id: Long, callback: Callback<Unit>)
+    fun save(post: Post, callback: Callback<Post>)
 
-    interface GetAllCallback {
-        fun onSuccess(posts: List<Post>) {}
-        fun onError(e: Exception) {}
-    }
-
-    interface ByIdCallBack {
-        fun onSuccess() {}
-        fun onError(e: Exception) {}
-    }
-
-    interface SaveCallBack {
-        fun onSuccess(post: Post) {}
+    interface Callback<T> {
+        fun onSuccess(value: T) {}
         fun onError(e: Exception) {}
     }
 
