@@ -1,13 +1,45 @@
-/*package com.example.nmedia.dao
+package ru.netology.nmedia.dao
 
-import com.example.nmedia.Post
-import java.io.Closeable
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.example.nmedia.entity.PostEntity
 
+@Dao
 interface PostDao {
-    fun getAll(): List<Post>
-    fun likeById(id: Long)
-    fun repostById(id: Long)
-    fun removeById(id: Long)
-    fun save(post: Post): Post
-    fun video()
-}*/
+    @Query("SELECT * FROM PostEntity ORDER BY id DESC")
+    fun getAll(): LiveData<List<PostEntity>>
+
+    @Query("SELECT COUNT(*) == 0 FROM PostEntity")
+    suspend fun isEmpty(): Boolean
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(post: PostEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(post: List<PostEntity>)
+
+    @Query("DELETE FROM PostEntity WHERE id=:id")
+    suspend fun removeById(id: Long)
+
+    @Query(
+        """
+            UPDATE PostEntity SET
+            likes = likes + CASE WHEN likedByMe THEN -1 ELSE 1 END,
+            likedByMe = CASE WHEN likedByMe THEN 0 ELSE 1 END
+            WHERE id = :id
+        """
+    )
+    suspend fun likeById(id: Long)
+
+    @Query(
+        """
+            UPDATE PostEntity SET
+            reposts = reposts + 1
+            WHERE id = :id
+        """
+    )
+    suspend fun repostById(id: Long)
+}

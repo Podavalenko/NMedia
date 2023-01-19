@@ -41,7 +41,8 @@ android {
 
 dependencies {
 
-    implementation 'com.google.firebase:firebase-messaging-ktx:22.0.0'
+
+    def core_version = "1.5.0"
     def activity_version = "1.6.1"
     def lifecycle_version = "2.5.1"
     def recyclerview_version = "1.2.1"
@@ -53,8 +54,10 @@ dependencies {
     def retrofitgson_version = '2.9.0'
     def okhttploggin_version = '4.9.1'
     def glide_version = "4.12.0"
+    def firebase_messages_version = "22.0.0"
+    def coroutines_version = "1.5.0"
 
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation "androidx.core:core-ktx:$core_version"
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -75,4 +78,6 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofitgson_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttploggin_version"
     implementation "com.github.bumptech.glide:glide:$glide_version"
+    implementation "com.google.firebase:firebase-messaging:$firebase_messages_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 }

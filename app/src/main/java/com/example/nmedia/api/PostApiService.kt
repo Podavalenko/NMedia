@@ -6,20 +6,21 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
+import retrofit2.Response
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import com.example.nmedia.Post
 
 
-private const val BASE_URL = "${BuildConfig.BASE_URL}/api/"
+private const val BASE_URL = "${BuildConfig.BASE_URL}/api/slow/"
 
-val logging = HttpLoggingInterceptor().apply {
+private val logging = HttpLoggingInterceptor().apply {
     if (BuildConfig.DEBUG) {
         level = HttpLoggingInterceptor.Level.BODY
     }
 }
 
-val client = OkHttpClient.Builder()
+private val client = OkHttpClient.Builder()
     .addInterceptor(logging)
     .build()
 
@@ -28,30 +29,29 @@ private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .client(client)
     .build()
-
 interface PostApiService {
 
     @GET("posts")
-    fun getAll(): Call<List<Post>>
+    suspend fun getAll(): Response<List<Post>>
 
     @GET("posts/{id}")
-    fun getPostById(@Path("id") id: Long): Call<Post>
+    suspend fun getPostById(@Path("id") id: Long): Response<Post>
 
     @POST("posts/{id}/likes")
-    fun likeById(@Path("id") id: Long): Call<Post>
+    suspend fun likeById(@Path("id") id: Long): Response<Post>
 
     @DELETE("posts/{id}/likes")
-    fun dislikeById(@Path("id") id: Long): Call<Post>
+    suspend fun dislikeById(@Path("id") id: Long): Response<Post>
 
     @DELETE("posts/{id}")
-    fun removeById(@Path("id") id: Long): Call<Unit>
+    suspend fun removeById(@Path("id") id: Long): Response<Unit>
 
     @POST("posts")
-    fun save(@Body post: Post): Call<Post>
+    suspend fun save(@Body post: Post): Response<Post>
 }
 
-object PostApi {
-    val retrofitServise: PostApiService by lazy {
+object PostsApi {
+    val service: PostApiService by lazy {
         retrofit.create(PostApiService::class.java)
     }
 }

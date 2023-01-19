@@ -6,8 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper
 import com.example.nmedia.dao.PostDao
 import com.example.nmedia.dao.PostDaoImpl
 
-class AppDb private constructor(db: SQLiteDatabase) {
-    val postDao: PostDao = PostDaoImpl(db)
+@Database(entities = [PostEntity::class], version = 1, exportSchema = false)
+abstract class AppDb : RoomDatabase() {
+    abstract fun postDao(): PostDao
 
     companion object {
         @Volatile
@@ -15,29 +16,14 @@ class AppDb private constructor(db: SQLiteDatabase) {
 
         fun getInstance(context: Context): AppDb {
             return instance ?: synchronized(this) {
-                instance ?: AppDb(buildDatabase(context, arrayOf(PostDaoImpl.DDL)))
+                instance ?: buildDatabase(context).also { instance = it }
             }
         }
 
-        private fun buildDatabase(context: Context, DDLs: Array<String>) = DbHelper(
-            context, 1, "app.db", DDLs,
-        ).writableDatabase
-    }
-}
-
-class DbHelper(context: Context, dbVersion: Int, dbName: String, private val DDLs: Array<String>) :
-    SQLiteOpenHelper(context, dbName, null, dbVersion) {
-    override fun onCreate(db: SQLiteDatabase) {
-        DDLs.forEach {
-            db.execSQL(it)
-        }
-    }
-
-    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onDowngrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        super.onDowngrade(db, oldVersion, newVersion)
+        private fun buildDatabase(context: Context) =
+            Room.databaseBuilder(context, AppDb::class.java, "app.db")
+                .fallbackToDestructiveMigration()
+                //   .allowMainThreadQueries()
+                .build()
     }
 }
