@@ -1,4 +1,4 @@
-package com.example.nmedia.dao
+/*package com.example.nmedia.dao
 
 import com.example.nmedia.Post
 import java.io.Closeable
@@ -10,4 +10,4 @@ interface PostDao {
     fun removeById(id: Long)
     fun save(post: Post): Post
     fun video()
-}
+}*/
