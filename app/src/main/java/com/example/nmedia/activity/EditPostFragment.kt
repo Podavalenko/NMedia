@@ -26,7 +26,6 @@ class EditPostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentEditPostBinding.inflate(inflater, container, false)
-
         binding.editEdit.requestFocus()
         arguments?.textArg?.let(binding.editEdit::setText)
         binding.okEdit.setOnClickListener {
@@ -35,6 +34,11 @@ class EditPostFragment : Fragment() {
             AndroidUtils.hideKeyboard(requireView())
             findNavController().navigateUp()
         }
+
+//        viewModel.networkError.observe(viewLifecycleOwner, {
+//            Snackbar.make(requireView(), "${resources.getString(R.string.network_error)} $it", Snackbar.LENGTH_LONG).show()
+//        })
+
         return binding.root
     }
 }

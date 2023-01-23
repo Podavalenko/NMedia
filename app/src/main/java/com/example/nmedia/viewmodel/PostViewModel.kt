@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.nmedia.repository.InMemoryPostRepository
 import com.example.nmedia.repository.PostRepository
 import androidx.lifecycle.MutableLiveData
-import com.example.nmedia.Post
+import com.example.nmedia.dto.Post
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -15,6 +15,7 @@ import com.example.nmedia.util.SingleLiveEvent
 import java.io.IOException
 import kotlin.concurrent.thread
 import androidx.lifecycle.*
+import com.example.nmedia.model.FeedModelState
 import kotlinx.coroutines.launch
 
 private val empty = Post(

@@ -7,6 +7,8 @@ import androidx.navigation.findNavController
 import com.example.nmedia.R
 import com.example.nmedia.activity.NewPostFragment.Companion.textArg
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.android.gms.common.*
 
 class AppActivity : AppCompatActivity(R.layout.activity_app) {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +29,25 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
                 })
         }
         lifecycleScope
+        checkGoogleApiAvailability()
+    }
+
+    private fun checkGoogleApiAvailability() {
+        with(GoogleApiAvailability.getInstance()) {
+            val code = isGooglePlayServicesAvailable(this@AppActivity)
+            if (code == ConnectionResult.SUCCESS) {
+                return@with
+            }
+            if (isUserResolvableError(code)) {
+                getErrorDialog(this@AppActivity, code, 9000).show()
+                return
+            }
+            Toast.makeText(this@AppActivity, R.string.google_play_unavailable, Toast.LENGTH_LONG)
+                .show()
+        }
+        FirebaseMessaging.getInstance().token.addOnSuccessListener {
+            println(it)
+        }
     }
 }
 

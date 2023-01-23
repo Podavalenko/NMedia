@@ -25,4 +25,5 @@
     <string name="retry_loading">Повторить</string>
     <string name="empty_posts">Постов пока нет</string>
     <string name="network_error">Сетевая ошибка:</string>
+    <string name="error_unknown">Неизвестная ошибка</string>
 </resources>

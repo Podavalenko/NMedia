@@ -2,7 +2,7 @@ package com.example.nmedia.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.nmedia.Post
+import com.example.nmedia.dto.Post
 
 @Entity
 data class PostEntity (
@@ -16,35 +16,15 @@ data class PostEntity (
     val likes: Long,
     val reposts: Long,
     val videoUrl: String?,
-
+    //val attachment: Attachment?
 ) {
+    fun toDto() = Post(id, author, authorAvatar, content, published, likedByMe, likes, reposts, videoUrl/*, attachment*/)
+
     companion object {
-        fun fromDto(dto: Post) = with(dto) {
-            PostEntity(
-                id = id,
-                author = author,
-                authorAvatar = authorAvatar,
-                content = content,
-                published = published,
-                likedByMe = likedByMe,
-                likes = likes,
-                reposts = reposts,
-                videoUrl = videoUrl,
-
-            )
-        }
+        fun fromDto(dto: Post) =
+            PostEntity(dto.id, dto.author, dto.authorAvatar, dto.content, dto.published, dto.likedByMe, dto.likes, dto.reposts, dto.videoUrl/*, dto.attachment*/)
     }
-
-    fun toPost(): Post = Post(
-        id = id,
-        author = author,
-        authorAvatar = authorAvatar,
-        content = content,
-        published = published,
-        likedByMe = likedByMe,
-        likes = likes,
-        reposts = reposts,
-        videoUrl = videoUrl,
-
-    )
 }
+
+fun List<PostEntity>.toDto(): List<Post> = map(PostEntity::toDto)
+fun List<Post>.toEntity(): List<PostEntity> = map(PostEntity::fromDto)

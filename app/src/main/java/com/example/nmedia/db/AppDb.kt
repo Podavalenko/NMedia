@@ -3,8 +3,11 @@ package com.example.nmedia.db
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.nmedia.dao.PostDao
-import com.example.nmedia.dao.PostDaoImpl
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.example.nmedia.entity.PostEntity
+import ru.netology.nmedia.dao.PostDao
 
 @Database(entities = [PostEntity::class], version = 1, exportSchema = false)
 abstract class AppDb : RoomDatabase() {

@@ -24,21 +24,17 @@ class NewPostFragment : Fragment() {
     companion object {
         var Bundle.textArg: String? by StringArg
     }
-
     private val viewModel: PostViewModel by viewModels(
         ownerProducer = ::requireParentFragment
     )
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         val binding = FragmentNewPostBinding.inflate(inflater, container, false)
         binding.edit.requestFocus()
-
         arguments?.textArg?.let(binding.edit::setText)
-
         binding.ok.setOnClickListener {
             viewModel.changeContent(binding.edit.text.toString())
             viewModel.save()
@@ -46,13 +42,11 @@ class NewPostFragment : Fragment() {
             AndroidUtils.hideKeyboard(requireView())
         }
         viewModel.postCreated.observe(viewLifecycleOwner) {
-            viewModel.loadPosts()
-
             findNavController().navigateUp()
         }
-        viewModel.networkError.observe(viewLifecycleOwner, {
-            Snackbar.make(requireView(), "${resources.getString(R.string.network_error)} $it", Snackbar.LENGTH_LONG).show()
-        })
+//        viewModel.networkError.observe(viewLifecycleOwner, {
+//            Snackbar.make(requireView(), "${resources.getString(R.string.network_error)} $it", Snackbar.LENGTH_LONG).show()
+//        })
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             val content = binding.edit.text.toString()
