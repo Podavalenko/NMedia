@@ -25,4 +25,7 @@
     <string name="empty_posts">No posts yet</string>
     <string name="network_error">Network error:</string>
     <string name="error_unknown">Unknown error</string>
+    <string name="description_newer">New posts</string>
+    <string name="newer_posts">New descriptions: </string>
+    <string name="error_db">Db error</string>
 </resources>
