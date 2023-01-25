@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PostDao {
-    @Query("SELECT * FROM PostEntity WHERE wasRead = 0 ORDER BY id DESC")
+    @Query("SELECT * FROM PostEntity WHERE wasRead = 1 ORDER BY id DESC")
     fun getAll(): Flow<List<PostEntity>>
 
     @Query("UPDATE PostEntity SET wasRead = 1 WHERE wasRead = 0")

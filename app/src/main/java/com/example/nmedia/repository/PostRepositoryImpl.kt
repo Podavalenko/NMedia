@@ -61,20 +61,19 @@ class PostRepositoryImpl(private val dao: PostDao) : PostRepository {
     }
 
     override suspend fun getPostById(id: Long) {
-//        PostApi.retrofitServise.getPostById(id).enqueue(object : Callback<Post> {
-//            override fun onResponse(call: Call<Post>, response: Response<Post>) {
-//                if (!response.isSuccessful) {
-//                    callback.onError(RuntimeException(response.message()))
-//                    return
-//                } else {
-//                    callback.onSuccess(response.body() ?: throw RuntimeException("body is null"))
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<Post>, t: Throwable) {
-//                callback.onError(RuntimeException(t))
-//            }
-//        })
+        try {
+            val response = PostsApi.service.getPostById(id)
+            if (!response.isSuccessful) {
+                throw ApiError(response.code(), response.message())
+            }
+
+            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            dao.insert(PostEntity.fromDto(body))
+        } catch (e: IOException) {
+            throw NetworkError
+        } catch (e: Exception) {
+            throw UnknownError
+        }
     }
     override suspend fun likeById(id: Long) {
         dao.likeById(id)
